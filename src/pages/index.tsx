@@ -24,7 +24,6 @@ function Pages() {
           </button>
         </div>
       </div>
-      <h1>oioi</h1>
       <Home></Home>
     </div>
   );
