@@ -16,14 +16,28 @@ export default function Card() {
   const [formData, setFormData] = useState({
     name: '',
     year: '',
-    cast: '',
+    cast: [''],
     genre: '',
     classification: '',
     director: '',
   });
 
-  const handleChange = (e) => {
+  /*const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };*/
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    // Verifica se o campo é o que deve ser transformado em array
+    if (name === "cast") {
+      // Divide o valor em um array, usando a vírgula como separador
+      const array = value.split(",");
+      // Atualiza o estado com o array resultante
+      setFormData((prevFormData) => ({ ...prevFormData, [name]: array }));
+    } else {
+      // Se não for o campo que deve ser transformado em array, atualiza o estado normalmente
+      setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -34,6 +48,7 @@ export default function Card() {
       const res = await api.post("/movies", { ...formData }, config);
       console.log('deu bom')
     } catch (err) {
+      console.log(formData.cast)
       console.log(config)
       console.log(err)
       console.log(formData);
